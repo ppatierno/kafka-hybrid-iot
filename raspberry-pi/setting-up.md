@@ -18,3 +18,8 @@ The following are the steps for setting up a Raspberry Pi 2.
 * Configure the operating system on first boot (locale, keyboard, ...)
 * Configure the WiFi network (the TP-LINK TL WN725N dongle works fine) or connect via Ethernet cable
 * Connect a Bluetooth dongle (a compatible CSR 4.0 is fine)
+* Enable SSH from the "Raspberry Pi Configuration" menu then "Interfaces" tab
+
+# SSH access
+
+* Just run `ssh pi@<raspberry_pi_address>` and then enter the password
