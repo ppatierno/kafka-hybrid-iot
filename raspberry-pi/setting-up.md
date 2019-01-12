@@ -23,3 +23,8 @@ The following are the steps for setting up a Raspberry Pi 2.
 # SSH access
 
 * Just run `ssh pi@<raspberry_pi_address>` and then enter the password
+
+# Installing Node-Red
+
+* SSH to the Raspberry Pi
+* Follow instruction from the official Node-Red website [here](https://nodered.org/docs/hardware/raspberrypi) running the script
