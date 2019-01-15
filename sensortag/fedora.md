@@ -12,6 +12,8 @@ Devices:
 	hci0	58:91:CF:C0:20:EB
 ```
 
+> if nothing is show, it's possible the the dongle (or the onboard device) is OFF so run `sudo hciconfig hci0 up` (you can also use the opposite `down` command for turning off the device again)
+
 Scan for Bluetooth devices
 
 ```
