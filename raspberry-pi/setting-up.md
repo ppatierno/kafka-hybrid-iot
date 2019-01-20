@@ -22,7 +22,8 @@ The following are the steps for setting up a Raspberry Pi 2.
 
 # SSH access
 
-* Just run `ssh pi@<raspberry_pi_address>` and then enter the password
+* If you want to know the Raspberry Pi IP address from your laptop you can use `nmap` (i.e. `nmap -sn 192.168.1.0/24` if your laptop has an address in the `192.168.1.XXX` local network)
+* Just run `ssh pi@<raspberry_pi_address>` and then enter the password (default is `raspberry`)
 
 # Installing Node-Red
 
