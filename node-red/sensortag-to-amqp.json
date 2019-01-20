@@ -1,0 +1,127 @@
+[
+    {
+        "id": "2032ef14.e07e6",
+        "type": "tab",
+        "label": "SensorTagToAmqp",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "4bf62a50.0332d4",
+        "type": "amqp-sender",
+        "z": "2032ef14.e07e6",
+        "endpoint": "a8f56249.3fe0d",
+        "address": "my_topic",
+        "autosettle": true,
+        "dynamic": false,
+        "sndsettlemode": 2,
+        "rcvsettlemode": 0,
+        "durable": 0,
+        "expirypolicy": "session-end",
+        "name": "",
+        "x": 1050,
+        "y": 500,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ba771c84.f90f",
+        "type": "inject",
+        "z": "2032ef14.e07e6",
+        "name": "",
+        "topic": "",
+        "payload": "Hello",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 350,
+        "y": 380,
+        "wires": [
+            [
+                "47204b17.228084"
+            ]
+        ]
+    },
+    {
+        "id": "47204b17.228084",
+        "type": "function",
+        "z": "2032ef14.e07e6",
+        "name": "toAMQPmessage",
+        "func": "msg.payload = { body: msg.payload }\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 610,
+        "y": 380,
+        "wires": [
+            [
+                "4bf62a50.0332d4"
+            ]
+        ]
+    },
+    {
+        "id": "37bf4c3b.5f9324",
+        "type": "sensorTag",
+        "z": "2032ef14.e07e6",
+        "name": "",
+        "topic": "sensorTag",
+        "uuid": "",
+        "temperature": false,
+        "humidity": true,
+        "pressure": false,
+        "magnetometer": false,
+        "accelerometer": false,
+        "gyroscope": false,
+        "keys": false,
+        "luxometer": false,
+        "x": 300,
+        "y": 680,
+        "wires": [
+            [
+                "df80157b.23d038",
+                "9d83e51.e99ef18"
+            ]
+        ]
+    },
+    {
+        "id": "df80157b.23d038",
+        "type": "debug",
+        "z": "2032ef14.e07e6",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "x": 1050,
+        "y": 680,
+        "wires": []
+    },
+    {
+        "id": "9d83e51.e99ef18",
+        "type": "function",
+        "z": "2032ef14.e07e6",
+        "name": "toAMQPmessage",
+        "func": "msg.payload = { body: msg.payload.temperature.toString() }\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 630,
+        "y": 600,
+        "wires": [
+            [
+                "4bf62a50.0332d4"
+            ]
+        ]
+    },
+    {
+        "id": "a8f56249.3fe0d",
+        "type": "amqp-endpoint",
+        "z": "",
+        "host": "localhost",
+        "port": "5672",
+        "username": "test",
+        "password": "",
+        "name": ""
+    }
+]
