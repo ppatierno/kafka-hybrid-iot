@@ -1,1 +1,3 @@
-# kafka-iot
+# Kafka IoT
+
+![Overview](images/overview.png "Overview")
