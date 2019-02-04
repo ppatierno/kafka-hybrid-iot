@@ -1,0 +1,40 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: strimzi-kafka-bridge
+  labels:
+    app: strimzi
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: strimzi-kafka-bridge
+    spec:
+      containers:
+      - name: strimzi-kafka-bridge
+        image: strimzi/kafka-bridge:latest
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: KAFKA_BOOTSTRAP_SERVERS
+          value: my-cluster-kafka-bootstrap:9092
+        - name: AMQP_MODE
+          value: SERVER
+        - name: AMQP_PORT
+          value: "5671"
+        - name: AMQP_CERT_DIR
+          value: "/etc/strimzi-kafka-bridge-certs"
+        volumeMounts:
+        - name: strimzi-kafka-bridge-certs
+          mountPath: "/etc/strimzi-kafka-bridge-certs"
+        ports:
+        - containerPort: 5671
+          protocol: TCP
+          name: amqps
+        livenessProbe:
+          tcpSocket:
+            port: amqps
+      volumes:
+      - name: strimzi-kafka-bridge-certs
+        secret:
+          secretName: strimzi-kafka-bridge-certs

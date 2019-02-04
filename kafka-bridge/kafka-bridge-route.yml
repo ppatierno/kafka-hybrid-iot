@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Route
+metadata:
+  name: strimzi-kafka-bridge-route 
+spec:
+  to:
+    kind: Service
+    name: strimzi-kafka-bridge
+  tls:
+    termination: passthrough 
