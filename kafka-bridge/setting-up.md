@@ -8,3 +8,9 @@ A Secret is needed for storing the CA certificate, server certificate and key fo
     --from-file=tls.key=./qdrouterd/certs/server-key.pem
 
 After Secret creation, it needs to be mounted as volume for the Kafka bridge deployment.
+
+# Deploying the Kafka bridge
+
+    oc apply -f ./kafka-bridge/kafka-bridge-deployment.yml
+    oc apply -f ./kafka-bridge/kafka-bridge-service.yml
+    oc apply -f ./kafka-bridge/kafka-bridge-route.yml
