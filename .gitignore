@@ -1,0 +1,5 @@
+# Maven build targets
+**/target/*
+
+# VS Code
+.vscode
