@@ -1,5 +1,21 @@
 # Maven build targets
 **/target/*
 
+# Maven release files
+*.releaseBackup
+release.properties
+
+# Eclipse specific
+**/.project
+**/.settings/*
+**/.prefs
+**/.classpath
+/target/
+
+# IntelliJ IDEA specific
+.idea/
+*.iml
+
 # VS Code
+.factorypath
 .vscode
