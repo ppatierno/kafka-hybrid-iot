@@ -1,0 +1,23 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: camel-amqp-kafka
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: camel-amqp-kafka
+    spec:
+      containers:
+      - name: camel-amqp-kafka
+        image: docker.io/ppatierno/camel-amqp-kafka:latest
+        env:
+        - name: KAFKA_BOOTSTRAP_SERVER
+          value: my-cluster-kafka-bootstrap:9092
+        - name: KAFKA_TOPIC
+          value: my-kafka-topic
+        - name: AMQP_SERVER
+          value: qdrouterd:5672
+        - name: AMQP_ADDRESS
+          value: my-amqp-address
