@@ -1,0 +1,24 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: qdrouterd
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: qdrouterd
+    spec:
+      containers:
+      - name: qdrouterd
+        image: docker.io/ppatierno/qdrouterd:latest
+        command: ["qdrouterd"]
+        args: ["--config", "/etc/config/qdrouterd.conf"]
+        volumeMounts:
+          - name: qdrouterd-config
+            mountPath: /etc/config
+      volumes:
+      - name: qdrouterd-config
+        configMap:
+          name: qdrouterd-config
+        

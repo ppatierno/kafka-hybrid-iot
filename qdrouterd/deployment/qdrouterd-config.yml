@@ -1,0 +1,42 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: qdrouterd-config
+data:
+  qdrouterd.conf: |
+    router {
+      mode: standalone
+      id: Router.A
+    }
+
+    listener {
+        host: 0.0.0.0
+        port: amqp
+        authenticatePeer: no
+        saslMechanisms: ANONYMOUS
+    }
+
+    address {
+        prefix: closest
+        distribution: closest
+    }
+
+    address {
+        prefix: multicast
+        distribution: multicast
+    }
+
+    address {
+        prefix: unicast
+        distribution: closest
+    }
+
+    address {
+        prefix: exclusive
+        distribution: closest
+    }
+
+    address {
+        prefix: broadcast
+        distribution: multicast
+    }
