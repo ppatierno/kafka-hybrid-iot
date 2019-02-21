@@ -29,3 +29,23 @@ Then we create private keys and certificates, signed by the CA this time, for th
 Running with provided configuration file:
 
     qdrouterd --config qdrouterd.conf
+
+# Running on OpenShift
+
+## Secret creation with CA certificate, server certificate and key
+
+A Secret is needed for storing the CA certificate, server certificate and key for the TLS support.
+
+    oc create secret generic qdrouterd-certs \
+    --from-file=ca.crt=./certs/ca-cert.pem \
+    --from-file=tls.crt=./certs/server-cert.pem \
+    --from-file=tls.key=./certs/server-key.pem
+
+After Secret creation, it needs to be mounted as volume for the Kafka bridge deployment.
+
+## Deploying the Kafka bridge
+
+    oc apply -f ./deployment/qdrouterd-config.yml
+    oc apply -f ./deployment/qdrouterd.yml
+    oc apply -f ./deployment/qdrouterd-service.yml
+    oc apply -f ./deployment/qdrouterd-route.yml

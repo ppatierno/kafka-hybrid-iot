@@ -5,8 +5,8 @@ metadata:
 data:
   qdrouterd.conf: |
     router {
-      mode: standalone
-      id: Router.A
+        mode: standalone
+        id: Router.A
     }
 
     listener {
@@ -14,6 +14,15 @@ data:
         port: amqp
         authenticatePeer: no
         saslMechanisms: ANONYMOUS
+    }
+
+    listener {
+        host: 0.0.0.0
+        port: amqps
+        authenticatePeer: no
+        saslMechanisms: ANONYMOUS
+        sslProfile: router-ssl-profile
+        requireSsl: yes
     }
 
     address {
@@ -39,4 +48,11 @@ data:
     address {
         prefix: broadcast
         distribution: multicast
+    }
+
+    sslProfile {
+        name: router-ssl-profile
+        caCertFile: /etc/qdrouterd-certs/ca.crt
+        certFile: /etc/qdrouterd-certs/tls.crt
+        privateKeyFile: /etc/qdrouterd-certs/tls.key
     }

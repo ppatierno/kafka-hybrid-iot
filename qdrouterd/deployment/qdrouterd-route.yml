@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Route
+metadata:
+  name: qdrouterd-route 
+spec:
+  to:
+    kind: Service
+    name: qdrouterd
+  port:
+    targetPort: amqps
+  tls:
+    termination: passthrough 

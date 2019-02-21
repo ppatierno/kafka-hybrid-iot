@@ -17,8 +17,13 @@ spec:
         volumeMounts:
           - name: qdrouterd-config
             mountPath: /etc/config
+          - name: qdrouterd-certs
+            mountPath: "/etc/qdrouterd-certs"
       volumes:
       - name: qdrouterd-config
         configMap:
           name: qdrouterd-config
+      - name: qdrouterd-certs
+        secret:
+          secretName: qdrouterd-certs
         
