@@ -87,13 +87,20 @@ Running the following command, a file containing two `KafkaTopic` custom resourc
 The stream application uses Kafka Streams API reading from the `iot-temperature` topic, processing its values and then putting the max temperature value in the specified time window into the `iot-temperature-max` topic.
 It's deployed running following command :
 
-    oc create -f https://raw.githubusercontent.com/strimzi/strimzi-lab/master/iot-demo/stream-app/resources/stream-app.yml
+    oc apply -f https://raw.githubusercontent.com/strimzi/strimzi-lab/master/iot-demo/stream-app/resources/stream-app.yml
 
 The consumer application uses Kafka client in order to get messages from the `iot-temperature-max` topic and showing them in a Web UI.
 It's deployed running following command :
 
-    oc create -f https://raw.githubusercontent.com/strimzi/strimzi-lab/master/iot-demo/consumer-app/resources/consumer-app.yml
+    oc apply -f https://raw.githubusercontent.com/strimzi/strimzi-lab/master/iot-demo/consumer-app/resources/consumer-app.yml
 
 A route is provided in order to access the related Web UI.
 
 ![Consumer Web UI](images/consumer-web-ui.png "Consumer Web UI")
+
+# Deploy the Apache Camel AMQP to Kafka
+
+In order to bridge the data from the Qpid Dispatch Router over AMQP to Apache Kafka, an Apache Camel application with a related route is provided.
+It's deployed running following command:
+
+    oc apply -f camel-amqp-kafka/deployment/camel-amqp-kafka.yml

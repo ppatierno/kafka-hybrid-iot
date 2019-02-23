@@ -16,8 +16,8 @@ spec:
         - name: KAFKA_BOOTSTRAP_SERVER
           value: my-cluster-kafka-bootstrap:9092
         - name: KAFKA_TOPIC
-          value: my-kafka-topic
+          value: iot-temperature
         - name: AMQP_SERVER
           value: qdrouterd:5672
         - name: AMQP_ADDRESS
-          value: my-amqp-address
+          value: iot-temperature
