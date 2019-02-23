@@ -1,7 +1,11 @@
 package kafka.iot;
 
 import org.apache.camel.CamelContext;
+import org.apache.camel.Exchange;
+import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
+import org.apache.camel.component.kafka.KafkaConstants;
+
 import static org.apache.camel.component.amqp.AMQPComponent.amqpComponent;
 import org.apache.camel.impl.DefaultCamelContext;
 
@@ -51,6 +55,15 @@ public final class App {
                 }
                 
                 from("amqp-endpoint:queue:" + amqpAddress)
+                .process(new Processor(){
+                    
+                    @Override
+                    public void process(Exchange exchange) throws Exception {
+                        System.out.println(exchange.getIn().getHeader("deviceid"));
+                        String deviceId = String.valueOf(exchange.getIn().getHeader("deviceid"));
+                        exchange.getIn().setHeader(KafkaConstants.KEY, deviceId);
+                    }
+                })
                 .to("kafka:" + kafkaTopic + "?brokers=" + kafkaBootstrapServers)
                 .routeId("amqp-kafka-route")
                 .log("${body}");
