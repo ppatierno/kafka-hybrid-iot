@@ -74,7 +74,26 @@ From its log, you can notice that it is listening on AMQPS (5671) port for getti
 
 ![QDR log](images/qdrouterd-log.png "QDR log")
 
+# Deploy topics, Kafka Streams and consumer applications
 
+This demo uses a couple of topics.
+The first one named `iot-temperature` is used by the device for sending temperature values and by the stream application for getting such values and processing them.
+The second one is the `iot-temperature-max` topic where the stream application puts the max temperature value processed in the specified time window.
+In order to create these topics in the Kafka cluster, the Topic Operator can be used.
+Running the following command, a file containing two `KafkaTopic` custom resources is deployed to the OpenShift cluster and used by the Topic Controller for creating such topics.
 
+    oc apply -f https://raw.githubusercontent.com/strimzi/strimzi-lab/master/iot-demo/stream-app/resources/topics.yml
 
+The stream application uses Kafka Streams API reading from the `iot-temperature` topic, processing its values and then putting the max temperature value in the specified time window into the `iot-temperature-max` topic.
+It's deployed running following command :
 
+    oc create -f https://raw.githubusercontent.com/strimzi/strimzi-lab/master/iot-demo/stream-app/resources/stream-app.yml
+
+The consumer application uses Kafka client in order to get messages from the `iot-temperature-max` topic and showing them in a Web UI.
+It's deployed running following command :
+
+    oc create -f https://raw.githubusercontent.com/strimzi/strimzi-lab/master/iot-demo/consumer-app/resources/consumer-app.yml
+
+A route is provided in order to access the related Web UI.
+
+![Consumer Web UI](images/consumer-web-ui.png "Consumer Web UI")
