@@ -41,9 +41,9 @@ A Secret is needed for storing the CA certificate, server certificate and key fo
     --from-file=tls.crt=./certs/server-cert.pem \
     --from-file=tls.key=./certs/server-key.pem
 
-After Secret creation, it needs to be mounted as volume for the Kafka bridge deployment.
+After Secret creation, it needs to be mounted as volume for the Qpid Dispatch Router deployment.
 
-## Deploying the Kafka bridge
+## Deploying the Qpid Dispatch Router
 
     oc apply -f ./deployment/qdrouterd-config.yml
     oc apply -f ./deployment/qdrouterd.yml

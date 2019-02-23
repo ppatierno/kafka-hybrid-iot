@@ -1,4 +1,4 @@
-# Kafka IoT
+# Kafka Streams IoT
 
 ![Overview](images/overview.png "Overview")
 
