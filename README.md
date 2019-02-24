@@ -141,6 +141,14 @@ Finally, run NodeRed using the flow.
 
 ![sensortag amqp flow](images/sensortag-amqp-flow.png "sensortag amqp flow")
 
+## Outcome
+
+The SensorTag temperature value will be read by the IoT gateway trabslating from BLE to AMQP 1.0 and proxying the traffic to OpenShift.
+The Qpid Dispatch Router and the Apache Camale route will forward the traffic to Apache Kafka with the Streams API application handling the data.
+The consumer Web UI application will show a dashboard with the temparature value.
+
+![consumer sensotag data](images/consumer-sensotag-data.png "consumer sensotag data")
+
 ## Simulator
 
 If you want to try the ingestion pipeline without a SensorTag there is the data simulator flow `rng-to-amqp.json` under the `node-red` folder.
@@ -155,17 +163,3 @@ There is also the `rng-multisensors-to-amqp.json` flow which simulates different
 You could replicate the same with different SensorTag(s) connected to the NodeRed based IoT gateway
 
 ![consumer multisensors data](images/consumer-multisensors-data.png "consumer multisensors data")
-
-# Outcome
-
-The SensorTag temperature value will be read by the IoT gateway trabslating from BLE to AMQP 1.0 and proxying the traffic to OpenShift.
-The Qpid Dispatch Router and the Apache Camale route will forward the traffic to Apache Kafka with the Streams API application handling the data.
-The consumer Web UI application will show a dashboard with the temparature value.
-
-![consumer sensotag data](images/consumer-sensotag-data.png "consumer sensotag data")
-
-
-
-
-
-
