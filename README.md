@@ -148,6 +148,14 @@ This flow can be imported in NodeRed and it provides a random generator node whi
 
 ![rng amqp flow](images/rng-amqp-flow.png "rng amqp flow")
 
+There is also the `rng-multisensors-to-amqp.json` flow which simulates different sensors multiplexed with links over a single AMQP connection from the IoT gateway to the Qpid Dispatch Router for reaching the Apache Kafka ingestion system.
+
+![rng multisensors amqp flow](images/rng-multisensors-amqp-flow.png "rng multisensors amqp flow")
+
+You could replicate the same with different SensorTag(s) connected to the NodeRed based IoT gateway
+
+![consumer multisensors data](images/consumer-multisensors-data.png "consumer multisensors data")
+
 # Outcome
 
 The SensorTag temperature value will be read by the IoT gateway trabslating from BLE to AMQP 1.0 and proxying the traffic to OpenShift.

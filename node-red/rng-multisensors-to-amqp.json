@@ -1,0 +1,209 @@
+[
+    {
+        "id": "29239fc0.978b5",
+        "type": "tab",
+        "label": "Simulator Multi Sensors",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "269ad242.f80e9e",
+        "type": "amqp-sender",
+        "z": "29239fc0.978b5",
+        "endpoint": "f9ee9f58.23cda",
+        "address": "iot-temperature",
+        "autosettle": true,
+        "dynamic": false,
+        "sndsettlemode": 2,
+        "rcvsettlemode": 0,
+        "durable": 0,
+        "expirypolicy": "session-end",
+        "name": "",
+        "x": 850,
+        "y": 580,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "3c3e6d0e.093752",
+        "type": "inject",
+        "z": "29239fc0.978b5",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "1",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 310,
+        "y": 300,
+        "wires": [
+            [
+                "6269c99d.3376c8",
+                "acbcbfdb.1d8cf",
+                "c49c9735.a88ef8"
+            ]
+        ]
+    },
+    {
+        "id": "6269c99d.3376c8",
+        "type": "function",
+        "z": "29239fc0.978b5",
+        "name": "rng - sensor-1",
+        "func": "msg.payload = { \n    application_properties: { deviceid: \"sensor-1\" },\n    body: Math.round(Math.random() * (25 - 15) + 15)\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 560,
+        "y": 540,
+        "wires": [
+            [
+                "d6f32e0e.0f36f",
+                "269ad242.f80e9e"
+            ]
+        ]
+    },
+    {
+        "id": "d6f32e0e.0f36f",
+        "type": "debug",
+        "z": "29239fc0.978b5",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "x": 850,
+        "y": 660,
+        "wires": []
+    },
+    {
+        "id": "acbcbfdb.1d8cf",
+        "type": "function",
+        "z": "29239fc0.978b5",
+        "name": "rng - sensor-2",
+        "func": "msg.payload = { \n    application_properties: { deviceid: \"sensor-2\" },\n    body: Math.round(Math.random() * (25 - 15) + 15)\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 560,
+        "y": 400,
+        "wires": [
+            [
+                "ad7f32cc.0c623",
+                "a54acda6.68821"
+            ]
+        ]
+    },
+    {
+        "id": "ad7f32cc.0c623",
+        "type": "amqp-sender",
+        "z": "29239fc0.978b5",
+        "endpoint": "f9ee9f58.23cda",
+        "address": "iot-temperature",
+        "autosettle": true,
+        "dynamic": false,
+        "sndsettlemode": 2,
+        "rcvsettlemode": 0,
+        "durable": 0,
+        "expirypolicy": "session-end",
+        "name": "",
+        "x": 850,
+        "y": 400,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a54acda6.68821",
+        "type": "debug",
+        "z": "29239fc0.978b5",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 850,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "c49c9735.a88ef8",
+        "type": "function",
+        "z": "29239fc0.978b5",
+        "name": "rng - sensor-3",
+        "func": "msg.payload = { \n    application_properties: { deviceid: \"sensor-3\" },\n    body: Math.round(Math.random() * (25 - 15) + 15)\n}\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 570,
+        "y": 220,
+        "wires": [
+            [
+                "9f6b49bd.a9dc18",
+                "6ff9745a.57bb2c"
+            ]
+        ]
+    },
+    {
+        "id": "9f6b49bd.a9dc18",
+        "type": "amqp-sender",
+        "z": "29239fc0.978b5",
+        "endpoint": "f9ee9f58.23cda",
+        "address": "iot-temperature",
+        "autosettle": true,
+        "dynamic": false,
+        "sndsettlemode": 2,
+        "rcvsettlemode": 0,
+        "durable": 0,
+        "expirypolicy": "session-end",
+        "name": "",
+        "x": 850,
+        "y": 220,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "6ff9745a.57bb2c",
+        "type": "debug",
+        "z": "29239fc0.978b5",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 850,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "f9ee9f58.23cda",
+        "type": "amqp-endpoint",
+        "z": "",
+        "host": "qdrouterd-route-myproject.192.168.42.18.nip.io",
+        "port": "443",
+        "username": "test",
+        "password": "",
+        "container_id": "",
+        "tls": "7dc20d39.d7a894",
+        "usetls": true,
+        "rejectUnauthorized": false,
+        "name": ""
+    },
+    {
+        "id": "7dc20d39.d7a894",
+        "type": "tls-config",
+        "z": "",
+        "name": "test-tls-node",
+        "cert": "",
+        "key": "",
+        "ca": "",
+        "certname": "",
+        "keyname": "",
+        "caname": "ca-cert.pem",
+        "servername": "",
+        "verifyservercert": false
+    }
+]

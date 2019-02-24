@@ -50,11 +50,11 @@
         "type": "function",
         "z": "8e2ec85e.457458",
         "name": "toAMQPmessage",
-        "func": "msg.payload = { \n    application_properties: { deviceid: 'my-device-id'},\n    body: msg.payload \n}\nreturn msg;",
+        "func": "msg.payload = { \n    application_properties: { deviceid: msg.payload.deviceid },\n    body: msg.payload.temperature \n}\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 750,
-        "y": 400,
+        "x": 810,
+        "y": 340,
         "wires": [
             [
                 "58fd9955.b40428"
@@ -66,10 +66,10 @@
         "type": "function",
         "z": "8e2ec85e.457458",
         "name": "rng",
-        "func": "msg.payload = Math.round(Math.random() * (25 - 15) + 15);\nreturn msg;",
+        "func": "msg.payload = {\n    temperature : Math.round(Math.random() * (25 - 15) + 15),\n    deviceid : \"sensor-1\"\n}\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 520,
+        "x": 550,
         "y": 460,
         "wires": [
             [
@@ -87,7 +87,7 @@
         "tosidebar": true,
         "console": false,
         "tostatus": false,
-        "complete": "false",
+        "complete": "payload",
         "x": 860,
         "y": 580,
         "wires": []
