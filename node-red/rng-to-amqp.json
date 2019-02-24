@@ -1,0 +1,123 @@
+[
+    {
+        "id": "8e2ec85e.457458",
+        "type": "tab",
+        "label": "Simulator",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "58fd9955.b40428",
+        "type": "amqp-sender",
+        "z": "8e2ec85e.457458",
+        "endpoint": "f9ee9f58.23cda",
+        "address": "iot-temperature",
+        "autosettle": true,
+        "dynamic": false,
+        "sndsettlemode": 2,
+        "rcvsettlemode": 0,
+        "durable": 0,
+        "expirypolicy": "session-end",
+        "name": "",
+        "x": 1130,
+        "y": 280,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "bf6e2193.c3ff5",
+        "type": "inject",
+        "z": "8e2ec85e.457458",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "1",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 310,
+        "y": 300,
+        "wires": [
+            [
+                "d1908f9c.18b5"
+            ]
+        ]
+    },
+    {
+        "id": "dcc85f06.92dee",
+        "type": "function",
+        "z": "8e2ec85e.457458",
+        "name": "toAMQPmessage",
+        "func": "msg.payload = { \n    application_properties: { deviceid: 'my-device-id'},\n    body: msg.payload \n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 750,
+        "y": 400,
+        "wires": [
+            [
+                "58fd9955.b40428"
+            ]
+        ]
+    },
+    {
+        "id": "d1908f9c.18b5",
+        "type": "function",
+        "z": "8e2ec85e.457458",
+        "name": "rng",
+        "func": "msg.payload = Math.round(Math.random() * (25 - 15) + 15);\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 520,
+        "y": 460,
+        "wires": [
+            [
+                "cf5035dc.28a708",
+                "dcc85f06.92dee"
+            ]
+        ]
+    },
+    {
+        "id": "cf5035dc.28a708",
+        "type": "debug",
+        "z": "8e2ec85e.457458",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 860,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "f9ee9f58.23cda",
+        "type": "amqp-endpoint",
+        "z": "",
+        "host": "qdrouterd-route-myproject.192.168.42.18.nip.io",
+        "port": "443",
+        "username": "test",
+        "password": "",
+        "container_id": "",
+        "tls": "7dc20d39.d7a894",
+        "usetls": true,
+        "rejectUnauthorized": false,
+        "name": ""
+    },
+    {
+        "id": "7dc20d39.d7a894",
+        "type": "tls-config",
+        "z": "",
+        "name": "test-tls-node",
+        "cert": "",
+        "key": "",
+        "ca": "",
+        "certname": "",
+        "keyname": "",
+        "caname": "ca-cert.pem",
+        "servername": "",
+        "verifyservercert": false
+    }
+]

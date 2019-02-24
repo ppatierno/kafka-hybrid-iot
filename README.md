@@ -141,6 +141,13 @@ Finally, run NodeRed using the flow.
 
 ![sensortag amqp flow](images/sensortag-amqp-flow.png "sensortag amqp flow")
 
+## Simulator
+
+If you want to try the ingestion pipeline without a SensorTag there is the data simulator flow `rng-to-amqp.json` under the `node-red` folder.
+This flow can be imported in NodeRed and it provides a random generator node which every second generates temperature values between 15 and 25 degrees sending them over AMQP 1.0.
+
+![rng amqp flow](images/rng-amqp-flow.png "rng amqp flow")
+
 # Outcome
 
 The SensorTag temperature value will be read by the IoT gateway trabslating from BLE to AMQP 1.0 and proxying the traffic to OpenShift.
