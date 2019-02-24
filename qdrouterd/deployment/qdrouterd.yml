@@ -2,6 +2,8 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: qdrouterd
+  labels:
+    app: iot-demo
 spec:
   replicas: 1
   template:

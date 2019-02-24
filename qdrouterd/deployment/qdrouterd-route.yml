@@ -1,7 +1,9 @@
 apiVersion: v1
 kind: Route
 metadata:
-  name: qdrouterd-route 
+  name: qdrouterd-route
+  labels:
+    app: iot-demo
 spec:
   to:
     kind: Service
