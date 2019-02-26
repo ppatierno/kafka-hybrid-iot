@@ -106,16 +106,18 @@ It's deployed running following command:
 
     oc apply -f camel-amqp-kafka/deployment/camel-amqp-kafka.yml
 
-# Deploy the NodeRed application
+You can find the related source code under the `camel-amqp-kafka` folder.
 
-The IoT gateway (which could be your laptop for this demo) is built using [NodeRed](https://nodered.org) that you have to download and install following the instructions on the official website.
+# Deploy the Node-Red application
+
+The IoT gateway (which could be your laptop for this demo) is built using [Node-Red](https://nodered.org) that you have to download and install following the instructions on the official website.
 
 After installing it, the flow `sensortag-to-amqp.json` under the folder `node-red` has to be imported.
 
 It uses a couple of custom nodes:
 
 * SensorTag: a node which is able to connect to a [SensorTag](http://www.ti.com/tools-software/sensortag.html) for getting the sensors data.
-* AMQP 1.0 rhea node: an AMQP 1.0 node based on the rhea JavaScript library.
+* AMQP 1.0 rhea node: an AMQP 1.0 node based on the [rhea](https://github.com/amqp/rhea) JavaScript library.
 
 The SensorTag node can be installed following the documentation [here](node-red/sensortag.md) because it's an hacked version of the original one for running on newer versions of NodeJS.
 
@@ -128,8 +130,12 @@ The AMQP 1.0 rhea node can be installed from the official NPM website [here](htt
 The AMQP 1.0 node configuration needs:
 
 * an AMQP endpoint where the Host has to be the OpenShift route address of the Qpid Dispatch Router.
-* SSL/TLS enabled with a TLS configuration node using the CA certificate used for signing the Qpid Dispatch Router server certificate.
-* the address set to `iot-temperature`.
+* SSL/TLS enabled with a TLS configuration node importing the CA certificate used for signing the Qpid Dispatch Router server certificate.
+* the AMQP address set to `iot-temperature` for sending temperature values.
+
+You can get the OpenShift route of the Qpid Dispatch Router with following command:
+
+    oc get routes qdrouterd -o=jsonpath='{.status.ingress[0].host}{"\n"}'
 
 ![rhea node](images/rhea-node.png "rhea node")
 
@@ -137,15 +143,15 @@ The AMQP 1.0 node configuration needs:
 
 ![rhea node endpoint](images/rhea-node-endpoint.png "rhea node endpoint")
 
-Finally, run NodeRed using the flow.
+Finally, deploy the flow on the Node-Red instance.
 
 ![sensortag amqp flow](images/sensortag-amqp-flow.png "sensortag amqp flow")
 
 ## Outcome
 
-The SensorTag temperature value will be read by the IoT gateway trabslating from BLE to AMQP 1.0 and proxying the traffic to OpenShift.
-The Qpid Dispatch Router and the Apache Camale route will forward the traffic to Apache Kafka with the Streams API application handling the data.
-The consumer Web UI application will show a dashboard with the temparature value.
+The Node-Red flow, acting as an IoT gateway, gets the temperature values from the SensorTag via BLE translating to AMQP 1.0 and proxying the traffic to OpenShift.
+The Qpid Dispatch Router and the Apache Camale route forward the traffic to Apache Kafka with the Streams API application handling the data.
+The consumer Web UI application will show a dashboard with the temparature value in the last window highlighting a value over the threshold.
 
 ![consumer sensotag data](images/consumer-sensotag-data.png "consumer sensotag data")
 
@@ -160,6 +166,6 @@ There is also the `rng-multisensors-to-amqp.json` flow which simulates different
 
 ![rng multisensors amqp flow](images/rng-multisensors-amqp-flow.png "rng multisensors amqp flow")
 
-You could replicate the same with different SensorTag(s) connected to the NodeRed based IoT gateway
-
 ![consumer multisensors data](images/consumer-multisensors-data.png "consumer multisensors data")
+
+You could replicate the same with different SensorTag(s) connected to the Node-Red based IoT gateway

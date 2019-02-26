@@ -15,7 +15,7 @@ The corresponding libraries are:
 
 # SensorTag Node-Red node
 
-You could use this SensorTag Node-Red Node [https://www.npmjs.com/package/node-red-node-sensortag](https://www.npmjs.com/package/node-red-node-sensortag) but it doesn't work starting from NodeJS anymore due to the following [issue](https://github.com/noble/node-bluetooth-hci-socket/issues/84).
+You could use this SensorTag Node-Red Node [https://www.npmjs.com/package/node-red-node-sensortag](https://www.npmjs.com/package/node-red-node-sensortag) but it doesn't work starting from NodeJS 10 anymore due to the following [issue](https://github.com/noble/node-bluetooth-hci-socket/issues/84).
 
 Starting from the patched [node-bluetooth-hci-socket](https://www.npmjs.com/package/@abandonware/bluetooth-hci-socket) node module, I have forked all the modules in the pipeline for having the SensorTag Node-Red Node working again.
 Following the pipeline:
