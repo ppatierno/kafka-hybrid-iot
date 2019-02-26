@@ -1,6 +1,6 @@
 # Kafka Streams IoT
 
-![Overview](images/overview-2.png "Overview")
+![Overview](images/overview-camel.png "Overview")
 
 # OpenShift cluster
 
