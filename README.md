@@ -17,10 +17,10 @@ After that, start the OpenShift cluster running the command:
 In order to deploy the Kafka cluster (on OpenShift) for ingesting the data, the [Strimzi](https://strimzi.io/) project is used.
 Download the latest release from [here](https://strimzi.io/downloads/) and extract the archive.
 
-    wget https://github.com/strimzi/strimzi-kafka-operator/releases/download/0.10.0/strimzi-0.10.0.tar.gz
-    tar xvzf strimzi-0.10.0.tar.gz
-    rm strimzi-0.10.0.tar.gz
-    cd strimzi-0.10.0
+    wget https://github.com/strimzi/strimzi-kafka-operator/releases/download/0.11.1/strimzi-0.11.1.tar.gz
+    tar xvzf strimzi-0.11.1.tar.gz
+    rm strimzi-0.11.1.tar.gz
+    cd strimzi-0.11.1
 
 In order to install the Strimzi Cluster Operator, the logged OpenShift user needs admin rights and the simple way is to login as `system:admin`.
 
@@ -48,7 +48,7 @@ Accessing to the OpenShift web console you can see the Strimzi Cluster Operator 
 # Qpid Dispatch Router deployment
 
 In order to ingest the data from the IoT gateway, the [AMQP 1.0](https://www.amqp.org/) protocol is used.
-For this reason, the [Qpid Dispatch Router](https://qpid.apache.org/components/dispatch-router/index.html) is used as entry point to the ingestion sysyem.
+For this reason, the [Qpid Dispatch Router](https://qpid.apache.org/components/dispatch-router/index.html) is used as the entry point to the ingestion sysyem.
 For accessing the QDR from outside the OpenShift cluster, a route is used so the TLS support is needed.
 The demo provides some certificates (CA and router certificates with related keys) that you can use disabling the hostname verification for simplicity, otherwise you have to generate your own certificates.
 
