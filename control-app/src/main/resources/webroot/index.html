@@ -81,10 +81,17 @@
 
         <div class="col-sm-4 col-md-3 sidebar-pf sidebar-pf-right">
           <div class="sidebar-header sidebar-header-bleed-left sidebar-header-bleed-right">
-            <h2 class="h5">Apache Kafka Messages Dashboard</h2>
+            <h2 class="h4">AMQP commands Dashboard</h2>
+          </div>
+          <p>The buttons allow to send commands to the edge.</p>
+          <p>
+            <button class="btn btn-default" type="button" id="command1">Command-1!</button>
+            <button class="btn btn-default" type="button" id="command2">Command-2!</button>
+          </p>
+          <div class="sidebar-header sidebar-header-bleed-left sidebar-header-bleed-right">
+            <h2 class="h4">Apache Kafka Messages Dashboard</h2>
           </div>
           <p>The log window shows you messages read from the Kafka topic while they come.</p>
-
           <form class="form-inline">
             <div class="form-group">
               <div class="input-group">
@@ -95,9 +102,6 @@
             </div>
           </form>
           <ul class="list-unstyled log" id="messages"></ul>
-          <span class="input-group-btn">
-            <button class="btn btn-default" type="button" id="command">Command!</button>
-          </span>
         </div><!-- /col -->
       </div><!-- /row -->
     </div>
@@ -186,9 +190,8 @@
         $('#messages').empty();
       });
 
-      $('#command').click(function() {
-        eb.publish("control", "command");
-      });
+      $('#command1').click({command: "command1"}, commandHandler);
+      $('#command2').click({command: "command2"}, commandHandler);
 
       // function which is triggered in order to delete gauge if a device related one is not updated in the latest 10 secs
       setInterval(function() {
@@ -201,6 +204,15 @@
           }
         }
       }, 1000);
+
+      function commandHandler(event) {
+
+        var headers = {
+          "command" : event.data.command
+        }
+
+        eb.publish("control", "command", headers);
+      }
 
     </script>
 
