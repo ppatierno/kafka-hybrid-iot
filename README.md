@@ -75,7 +75,7 @@ From its log, you can notice that it is listening on AMQPS (5671) port for getti
 
 ![QDR log](images/qdrouterd-log.png "QDR log")
 
-# Deploy topics, Kafka Streams and consumer applications
+# Deploy topics, Kafka Streams and control applications
 
 This demo uses a couple of topics.
 The first one named `iot-temperature` is used by the device for sending temperature values and by the stream application for getting such values and processing them.
@@ -90,14 +90,15 @@ It's deployed running following command :
 
     oc apply -f https://raw.githubusercontent.com/strimzi/strimzi-lab/master/iot-demo/stream-app/resources/stream-app.yml
 
-The consumer application uses Kafka client in order to get messages from the `iot-temperature-max` topic and showing them in a Web UI.
+The control application uses Kafka client in order to get messages from the `iot-temperature-max` topic and showing them in a Web UI.
+It also uses AMQP 1.0 protocol for sending commands to the IoT gateway to the `control` address.
 It's deployed running following command :
 
-    oc apply -f https://raw.githubusercontent.com/strimzi/strimzi-lab/master/iot-demo/consumer-app/resources/consumer-app.yml
+    oc apply -f control-app/deployment/control-app.yml
 
 A route is provided in order to access the related Web UI.
 
-![Consumer Web UI](images/consumer-web-ui.png "Consumer Web UI")
+![Control Web UI](images/control-web-ui.png "Control Web UI")
 
 # Deploy the Apache Camel AMQP to Kafka
 
@@ -153,7 +154,7 @@ The Node-Red flow, acting as an IoT gateway, gets the temperature values from th
 The Qpid Dispatch Router and the Apache Camale route forward the traffic to Apache Kafka with the Streams API application handling the data.
 The consumer Web UI application will show a dashboard with the temparature value in the last window highlighting a value over the threshold.
 
-![consumer sensotag data](images/consumer-sensotag-data.png "consumer sensotag data")
+![control sensortag data](images/control-sensortag-data.png "control sensortag data")
 
 ## Simulator
 
