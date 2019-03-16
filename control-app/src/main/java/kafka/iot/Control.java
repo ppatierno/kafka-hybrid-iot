@@ -138,8 +138,10 @@ public class Control {
 
                 case COMMAND:
                     
-                    log.info("Sending control command...");
-                    Message msg = ProtonHelper.message(amqpAddress, "Command!");
+                    String command = message.headers().get("command");
+                    log.info("Sending control command: '{}'", command);
+
+                    Message msg = ProtonHelper.message(amqpAddress, command);
                     sender.send(msg, delivery -> {
                         log.info("Message delivered {}", delivery.getRemoteState());
                         if (delivery.getRemoteState() instanceof Rejected) {
