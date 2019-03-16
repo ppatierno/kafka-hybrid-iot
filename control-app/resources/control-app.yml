@@ -24,6 +24,10 @@ spec:
               value: "iot-temperature-max"
             - name: CONSUMER_AUTO_OFFSET_RESET
               value: "earliest"
+            - name: AMQP_SERVER
+              value: "qdrouterd:5672"
+            - name: AMQP_ADDRESS
+              value: "control"
 ---
 apiVersion: v1
 kind: Service

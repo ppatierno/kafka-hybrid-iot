@@ -95,6 +95,9 @@
             </div>
           </form>
           <ul class="list-unstyled log" id="messages"></ul>
+          <span class="input-group-btn">
+            <button class="btn btn-default" type="button" id="control">Control!</button>
+          </span>
         </div><!-- /col -->
       </div><!-- /row -->
     </div>
@@ -181,6 +184,10 @@
 
       $('#clean').click(function() {
         $('#messages').empty();
+      });
+
+      $('#control').click(function() {
+        eb.publish("config", "control");
       });
 
       // function which is triggered in order to delete gauge if a device related one is not updated in the latest 10 secs

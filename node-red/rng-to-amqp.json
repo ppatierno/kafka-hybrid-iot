@@ -3,7 +3,7 @@
         "id": "8e2ec85e.457458",
         "type": "tab",
         "label": "Simulator",
-        "disabled": false,
+        "disabled": true,
         "info": ""
     },
     {
@@ -65,7 +65,7 @@
         "id": "d1908f9c.18b5",
         "type": "function",
         "z": "8e2ec85e.457458",
-        "name": "rng",
+        "name": "rng - sensor-1",
         "func": "msg.payload = {\n    temperature : Math.round(Math.random() * (25 - 15) + 15),\n    deviceid : \"sensor-1\"\n}\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
@@ -83,7 +83,7 @@
         "type": "debug",
         "z": "8e2ec85e.457458",
         "name": "",
-        "active": true,
+        "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -93,10 +93,46 @@
         "wires": []
     },
     {
+        "id": "e79919d4.5bf778",
+        "type": "debug",
+        "z": "8e2ec85e.457458",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload.body",
+        "x": 890,
+        "y": 720,
+        "wires": []
+    },
+    {
+        "id": "baaa93ff.a2a66",
+        "type": "amqp-receiver",
+        "z": "8e2ec85e.457458",
+        "endpoint": "f9ee9f58.23cda",
+        "address": "control",
+        "autoaccept": true,
+        "creditwindow": 100,
+        "dynamic": false,
+        "sndsettlemode": 2,
+        "rcvsettlemode": 0,
+        "durable": 0,
+        "expirypolicy": "session-end",
+        "name": "",
+        "x": 520,
+        "y": 680,
+        "wires": [
+            [
+                "e79919d4.5bf778"
+            ]
+        ]
+    },
+    {
         "id": "f9ee9f58.23cda",
         "type": "amqp-endpoint",
         "z": "",
-        "host": "qdrouterd-route-myproject.192.168.42.18.nip.io",
+        "host": "qdrouterd-myproject.192.168.42.53.nip.io",
         "port": "443",
         "username": "test",
         "password": "",

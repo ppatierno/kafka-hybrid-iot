@@ -3,7 +3,7 @@
         "id": "29239fc0.978b5",
         "type": "tab",
         "label": "Simulator Multi Sensors",
-        "disabled": false,
+        "disabled": true,
         "info": ""
     },
     {
@@ -69,7 +69,7 @@
         "type": "debug",
         "z": "29239fc0.978b5",
         "name": "",
-        "active": true,
+        "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -119,7 +119,7 @@
         "type": "debug",
         "z": "29239fc0.978b5",
         "name": "",
-        "active": true,
+        "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -169,7 +169,7 @@
         "type": "debug",
         "z": "29239fc0.978b5",
         "name": "",
-        "active": true,
+        "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -179,10 +179,46 @@
         "wires": []
     },
     {
+        "id": "20750932.8d6dd6",
+        "type": "amqp-receiver",
+        "z": "29239fc0.978b5",
+        "endpoint": "f9ee9f58.23cda",
+        "address": "control",
+        "autoaccept": true,
+        "creditwindow": 100,
+        "dynamic": false,
+        "sndsettlemode": 2,
+        "rcvsettlemode": 0,
+        "durable": 0,
+        "expirypolicy": "session-end",
+        "name": "",
+        "x": 460,
+        "y": 780,
+        "wires": [
+            [
+                "5d665bf8.7e0664"
+            ]
+        ]
+    },
+    {
+        "id": "5d665bf8.7e0664",
+        "type": "debug",
+        "z": "29239fc0.978b5",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload.body",
+        "x": 830,
+        "y": 820,
+        "wires": []
+    },
+    {
         "id": "f9ee9f58.23cda",
         "type": "amqp-endpoint",
         "z": "",
-        "host": "qdrouterd-route-myproject.192.168.42.18.nip.io",
+        "host": "qdrouterd-myproject.192.168.42.53.nip.io",
         "port": "443",
         "username": "test",
         "password": "",

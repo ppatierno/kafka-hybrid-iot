@@ -3,7 +3,7 @@
         "id": "2032ef14.e07e6",
         "type": "tab",
         "label": "SensorTagToAmqp",
-        "disabled": false,
+        "disabled": true,
         "info": ""
     },
     {
@@ -19,8 +19,8 @@
         "durable": 0,
         "expirypolicy": "session-end",
         "name": "",
-        "x": 1050,
-        "y": 500,
+        "x": 1030,
+        "y": 340,
         "wires": [
             []
         ]
@@ -37,8 +37,8 @@
         "crontab": "",
         "once": false,
         "onceDelay": "",
-        "x": 350,
-        "y": 380,
+        "x": 330,
+        "y": 220,
         "wires": [
             [
                 "47204b17.228084"
@@ -53,8 +53,8 @@
         "func": "msg.payload = { body: msg.payload }\nreturn msg;\n",
         "outputs": 1,
         "noerr": 0,
-        "x": 610,
-        "y": 380,
+        "x": 590,
+        "y": 220,
         "wires": [
             [
                 "4bf62a50.0332d4"
@@ -76,8 +76,8 @@
         "gyroscope": false,
         "keys": false,
         "luxometer": false,
-        "x": 300,
-        "y": 680,
+        "x": 280,
+        "y": 520,
         "wires": [
             [
                 "df80157b.23d038",
@@ -90,13 +90,13 @@
         "type": "debug",
         "z": "2032ef14.e07e6",
         "name": "",
-        "active": true,
+        "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
         "complete": "payload",
-        "x": 1050,
-        "y": 680,
+        "x": 1030,
+        "y": 520,
         "wires": []
     },
     {
@@ -107,8 +107,8 @@
         "func": "msg.payload = { \n    application_properties: { deviceid: 'my-device-id'},\n    body: msg.payload.temperature.toString() \n}\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 630,
-        "y": 600,
+        "x": 610,
+        "y": 440,
         "wires": [
             [
                 "4bf62a50.0332d4"
@@ -116,10 +116,46 @@
         ]
     },
     {
+        "id": "56c650c9.0812c",
+        "type": "amqp-receiver",
+        "z": "2032ef14.e07e6",
+        "endpoint": "f9ee9f58.23cda",
+        "address": "control",
+        "autoaccept": true,
+        "creditwindow": 100,
+        "dynamic": false,
+        "sndsettlemode": 2,
+        "rcvsettlemode": 0,
+        "durable": 0,
+        "expirypolicy": "session-end",
+        "name": "",
+        "x": 320,
+        "y": 680,
+        "wires": [
+            [
+                "23445b2e.1e2414"
+            ]
+        ]
+    },
+    {
+        "id": "23445b2e.1e2414",
+        "type": "debug",
+        "z": "2032ef14.e07e6",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload.body",
+        "x": 690,
+        "y": 720,
+        "wires": []
+    },
+    {
         "id": "f9ee9f58.23cda",
         "type": "amqp-endpoint",
         "z": "",
-        "host": "qdrouterd-route-myproject.192.168.42.18.nip.io",
+        "host": "qdrouterd-myproject.192.168.42.53.nip.io",
         "port": "443",
         "username": "test",
         "password": "",
