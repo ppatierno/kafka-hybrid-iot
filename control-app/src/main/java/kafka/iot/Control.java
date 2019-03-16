@@ -31,7 +31,7 @@ public class Control {
     private static final String SEEK = "seek";
     private static final String SEEK_TO_BEGIN = "seektobegin";
     private static final String STATUS = "status";
-    private static final String CONTROL = "control";
+    private static final String COMMAND = "command";
 
     private static final String BOOTSTRAP_SERVERS = "BOOTSTRAP_SERVERS";
     private static final String CONSUMER_GROUPID = "CONSUMER_GROUPID";
@@ -69,7 +69,8 @@ public class Control {
         options
                 .addOutboundPermitted(new PermittedOptions().setAddress("dashboard"))
                 .addOutboundPermitted(new PermittedOptions().setAddress("status"))
-                .addInboundPermitted(new PermittedOptions().setAddress("config"));
+                .addInboundPermitted(new PermittedOptions().setAddress("config"))
+                .addInboundPermitted(new PermittedOptions().setAddress("control"));
 
         router.route("/eventbus/*").handler(SockJSHandler.create(vertx).bridge(options));
         router.route().handler(StaticHandler.create().setCachingEnabled(false));
@@ -126,11 +127,19 @@ public class Control {
                         vertx.eventBus().publish("status", String.format("Joining group = [%s] ...", groupId));
                     }
                     break;
+            }
+        });
 
-                case CONTROL:
+        vertx.eventBus().consumer("control", message -> {
+
+            String body = message.body().toString();
+
+            switch (body) {
+
+                case COMMAND:
                     
                     log.info("Sending control command...");
-                    Message msg = ProtonHelper.message(amqpAddress, "Control!");
+                    Message msg = ProtonHelper.message(amqpAddress, "Command!");
                     sender.send(msg, delivery -> {
                         log.info("Message delivered {}", delivery.getRemoteState());
                         if (delivery.getRemoteState() instanceof Rejected) {
