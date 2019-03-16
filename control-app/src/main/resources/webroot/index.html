@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <!-- PatternFly Styles -->
+
+    <!-- PatternFly Styles -->
+    <link rel="stylesheet" href="dist/css/patternfly.min.css">
+    <link rel="stylesheet" href="dist/css/patternfly-additions.min.css">
+
+    <!-- jQuery CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <!-- Bootstrap JS CDN -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <!-- Patternfly JS -->
+    <script src="dist/js/patternfly.min.js"></script>
+
+    <!-- SockJS bridging and Vert.x Event Bus -->
+    <script src="sockjs.min.js"></script>
+    <script src="vertx-eventbus.js"></script>
+
+    <!-- C3 and D3 components for charts -->
+    <script src="dist/components/c3.min.js"></script>
+    <script src="dist/components/d3.min.js"></script>
+
+    <style media="screen">
+      .log {
+        background: #f1f1f1;
+        height: calc(100vh - 280px);
+        overflow-y: scroll;
+        padding: 20px;
+        margin-top: 20px;
+      }
+
+      .gauges {
+        display: flex;
+        flex-wrap: wrap;
+      }
+
+      .item {
+        margin: 1rem;
+        padding: 1rem;
+        border: 1px solid #f1f1f1;
+        flex: 0 0 350px;
+      }
+    </style>
+
+  </head>
+  <body>
+
+    <nav class="navbar navbar-default navbar-pf" role="navigation">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse-11">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/">
+          <img src="dist/img/brand.svg" alt="PatternFly Enterprise Application" />
+        </a>
+      </div>
+    </nav>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-8 col-md-9">
+          <div class="page-header page-header-bleed-right">
+            <h1>IoT Temperature Sensors Dashboard</h1>
+          </div>
+          <div>
+            <strong><p id="status"></p></strong>
+          </div>
+
+          <div class="gauges" id="gauges"></div>
+
+        </div><!-- /col -->
+
+        <div class="col-sm-4 col-md-3 sidebar-pf sidebar-pf-right">
+          <div class="sidebar-header sidebar-header-bleed-left sidebar-header-bleed-right">
+            <h2 class="h5">Apache Kafka Messages Dashboard</h2>
+          </div>
+          <p>The log window shows you messages read from the Kafka topic while they come.</p>
+
+          <form class="form-inline">
+            <div class="form-group">
+              <div class="input-group">
+                <span class="input-group-btn">
+                  <button class="btn btn-default" type="button" id="clean">Clean!</button>
+                </span>
+              </div><!-- /input-group -->
+            </div>
+          </form>
+          <ul class="list-unstyled log" id="messages"></ul>
+        </div><!-- /col -->
+      </div><!-- /row -->
+    </div>
+
+    <script>
+
+      var devices = { }
+
+      var eb = new EventBus("http://" + location.host + "/eventbus");
+
+      eb.onopen = function() {
+
+        // handler for getting messages to show in the dashboard
+        eb.registerHandler("dashboard", function(error, message) {
+
+          var msg = 'id [' + message.body.key + '] max [' + message.body.value + ']';
+          $('#messages').prepend('<li>' + msg + '</li>');
+
+          if (devices[message.body.key] == undefined) {
+
+            $('#gauges').append('<div class="item" id=item-' + message.body.key + '><div id=' + message.body.key + '></div></div>');
+
+            var chart = c3.generate({
+              bindto: '#' + message.body.key,
+              data: {
+                columns: [
+                    [message.body.key, 0]
+                ],
+                type: 'gauge'
+              },
+              gauge: {
+                label: {
+                  format: function(value, ratio) {
+                    return value + ' °C';
+                  }
+                },
+                units: '',
+                max: 30
+              },
+              color: {
+                pattern: [ '#60B044', '#FF0000' ],
+                threshold: {
+                  unit: 'value',
+                  max: 30,
+                  values: [ 23 ]
+                }
+              }
+            });
+
+            devices[message.body.key] = chart;
+          }
+
+          devices[message.body.key].timestamp = new Date();
+          devices[message.body.key].load({
+            columns: [[message.body.key, message.body.value]]
+          });
+
+        });
+
+        // handler for getting Kafka consumer status
+        eb.registerHandler("status", function(error, message) {
+          $('#status').text(message.body);
+        });
+
+        // asking for Kafka consumer status on startup
+        eb.publish("config", "status");
+      };
+
+      $('#seekToBegin').click(function() {
+        $('#messages').empty();
+        eb.publish("config", "seektobegin");
+      });
+
+      $('#seek').click(function() {
+        $('#messages').empty();
+
+        var offset = $('#offset').val();
+        var headers = {
+          "offset" : offset
+        }
+
+        eb.publish("config", "seek", headers);
+      });
+
+      $('#clean').click(function() {
+        $('#messages').empty();
+      });
+
+      // function which is triggered in order to delete gauge if a device related one is not updated in the latest 10 secs
+      setInterval(function() {
+
+        for (var key in devices) {
+          var now = new Date();
+          if (now - devices[key].timestamp > 10000) {
+            delete devices[key]
+            $('#item-' + key).remove();
+          }
+        }
+      }, 1000);
+
+    </script>
+
+  </body>
+</html>
