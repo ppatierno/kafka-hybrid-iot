@@ -45,6 +45,11 @@ Accessing to the OpenShift web console you can see the Strimzi Cluster Operator 
 
 ![Strimzi Kafka cluster](images/strimzi-kafka.png "Strimzi Kafka cluster")
 
+Finally delete the Strimzi installation folder
+
+    cd ..
+    rm -rf strimzi-0.11.1
+
 # Qpid Dispatch Router deployment
 
 In order to ingest the data from the IoT gateway, the [AMQP 1.0](https://www.amqp.org/) protocol is used.
