@@ -1,5 +1,12 @@
 # Apache Kafka for the Hybrid IoT
 
+This repository hosts the source code of the demo I showed during the "Apache Kafka for the Hybrid IoT" DevNation Live talk on March 21st, 2019.
+Following the links to the slides deck, the webinar recording and an in depth video about the demo:
+
+* [Slides](https://www.slideshare.net/paolopat/apache-kafka-for-the-hybrid-iot)
+* [DevNation Live](https://www.youtube.com/watch?v=zmLzDj8OgQY) recording
+* [Demo](https://youtu.be/gxSyLMyAPYY) in depth video
+
 ![Overview](images/overview-camel.png "Overview")
 
 # OpenShift cluster
