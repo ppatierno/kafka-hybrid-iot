@@ -1,4 +1,4 @@
-# Kafka Streams IoT
+# Apache Kafka for the Hybrid IoT
 
 ![Overview](images/overview-camel.png "Overview")
 
