@@ -57,20 +57,9 @@ For this reason, the [Qpid Dispatch Router](https://qpid.apache.org/components/d
 For accessing the QDR from outside the OpenShift cluster, a route is used so the TLS support is needed.
 The demo provides some certificates (CA and router certificates with related keys) that you can use disabling the hostname verification for simplicity, otherwise you have to generate your own certificates.
 
-First of all, create the Secret containing all the certificates.
+Running this script will create the Secret containing all the certificates and all the QDR related OpenShift resources for having it running.
 
-    oc create secret generic qdrouterd-certs \
-    --from-file=ca.crt=qdrouterd/certs/ca-cert.pem \
-    --from-file=tls.crt=qdrouterd/certs/server-cert.pem \
-    --from-file=tls.key=qdrouterd/certs/server-key.pem
-    oc label secret qdrouterd-certs app=iot-demo
-
-After that, the QDR related OpenShift resources can be deployed running:
-
-    oc apply -f qdrouterd/deployment/qdrouterd-config.yml
-    oc apply -f qdrouterd/deployment/qdrouterd.yml
-    oc apply -f qdrouterd/deployment/qdrouterd-service.yml
-    oc apply -f qdrouterd/deployment/qdrouterd-route.yml
+    ./qdrouterd/qdrouterd.sh
 
 Accessing to the OpenShift web console you can see the QDR deployment.
 
